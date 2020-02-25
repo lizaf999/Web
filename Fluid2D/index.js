@@ -91,9 +91,34 @@
   !*** ./main.ts ***!
   \*****************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("window.addEventListener(\"DOMContentLoaded\", init);\nfunction init() {\n    var width = 960;\n    var height = 540;\n    var renderTarget = new THREE.WebGLRenderTarget(width, width, {\n        magFilter: THREE.NearestFilter,\n        minFilter: THREE.NearestFilter,\n        wrapS: THREE.ClampToEdgeWrapping,\n        wrapT: THREE.ClampToEdgeWrapping,\n        depthBuffer: false,\n        stencilBuffer: false\n    });\n    // レンダラーを作成\n    var renderer = new THREE.WebGLRenderer({\n        canvas: document.querySelector(\"#myCanvas\")\n    });\n    renderer.setPixelRatio(window.devicePixelRatio);\n    renderer.setSize(width, height);\n    // シーンを作成\n    var scene = new THREE.Scene();\n    // カメラを作成\n    var camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);\n    camera.position.set(0, 0, +1000);\n    // 箱を作成\n    var geometry = new THREE.BoxGeometry(500, 500, 500);\n    var material = new THREE.MeshStandardMaterial({\n        map: renderTarget.texture\n    });\n    var box = new THREE.Mesh(geometry, material);\n    scene.add(box);\n    // 平行光源\n    var light = new THREE.DirectionalLight(0xffffff);\n    light.intensity = 2; // 光の強さを倍に\n    light.position.set(1, 1, 1);\n    // シーンに追加\n    scene.add(light);\n    var scenePre = new THREE.Scene();\n    var materialPre = new THREE.MeshStandardMaterial({\n        color: 0xffff00\n    });\n    var boxPre = new THREE.Mesh(geometry, materialPre);\n    var lightPre = new THREE.DirectionalLight(0xffffff);\n    lightPre.intensity = 2; // 光の強さを倍に\n    lightPre.position.set(1, 1, 1);\n    scenePre.add(boxPre);\n    scenePre.add(lightPre);\n    // 初回実行\n    tick();\n    function tick() {\n        requestAnimationFrame(tick);\n        // 箱を回転させる\n        box.rotation.x += 0.01;\n        box.rotation.y += 0.01;\n        boxPre.rotation.x += 0.03;\n        boxPre.rotation.y += 0.05;\n        // レンダリング\n        renderer.setRenderTarget(renderTarget);\n        renderer.render(scenePre, camera);\n        renderer.setRenderTarget(null);\n        renderer.render(scene, camera);\n    }\n}\n\n\n//# sourceURL=webpack:///./main.ts?");
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nwindow.addEventListener(\"DOMContentLoaded\", init);\nvar vertexShader_vert_1 = __webpack_require__(/*! ./shaders/vertexShader.vert */ \"./shaders/vertexShader.vert\");\nvar fragmentShader_frag_1 = __webpack_require__(/*! ./shaders/fragmentShader.frag */ \"./shaders/fragmentShader.frag\");\nfunction init() {\n    var width = 960;\n    var height = 540;\n    var renderTarget = new THREE.WebGLRenderTarget(width, width, {\n        magFilter: THREE.NearestFilter,\n        minFilter: THREE.NearestFilter,\n        wrapS: THREE.ClampToEdgeWrapping,\n        wrapT: THREE.ClampToEdgeWrapping,\n        depthBuffer: false,\n        stencilBuffer: false\n    });\n    var mat = new THREE.ShaderMaterial({\n        vertexShader: vertexShader_vert_1.default,\n        fragmentShader: fragmentShader_frag_1.default\n    });\n    // レンダラーを作成\n    var renderer = new THREE.WebGLRenderer({\n        canvas: document.querySelector(\"#myCanvas\")\n    });\n    renderer.setPixelRatio(window.devicePixelRatio);\n    renderer.setSize(width, height);\n    // シーンを作成\n    var scene = new THREE.Scene();\n    // カメラを作成\n    var camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);\n    camera.position.set(0, 0, +1000);\n    // 箱を作成\n    var geometry = new THREE.BoxGeometry(500, 500, 500);\n    var material = new THREE.MeshStandardMaterial({\n        map: renderTarget.texture\n    });\n    var box = new THREE.Mesh(geometry, material);\n    scene.add(box);\n    // 平行光源\n    var light = new THREE.DirectionalLight(0xffffff);\n    light.intensity = 2; // 光の強さを倍に\n    light.position.set(1, 1, 1);\n    // シーンに追加\n    scene.add(light);\n    var scenePre = new THREE.Scene();\n    var materialPre = new THREE.MeshStandardMaterial({\n        color: 0xffff00\n    });\n    var boxPre = new THREE.Mesh(geometry, mat);\n    var lightPre = new THREE.DirectionalLight(0xffffff);\n    lightPre.intensity = 2; // 光の強さを倍に\n    lightPre.position.set(1, 1, 1);\n    scenePre.add(boxPre);\n    scenePre.add(lightPre);\n    // 初回実行\n    tick();\n    function tick() {\n        requestAnimationFrame(tick);\n        // 箱を回転させる\n        box.rotation.x += 0.01;\n        box.rotation.y += 0.01;\n        boxPre.rotation.x += 0.03;\n        boxPre.rotation.y += 0.05;\n        // レンダリング\n        renderer.setRenderTarget(renderTarget);\n        renderer.render(scenePre, camera);\n        renderer.setRenderTarget(null);\n        renderer.render(scene, camera);\n    }\n}\n\n\n//# sourceURL=webpack:///./main.ts?");
+
+/***/ }),
+
+/***/ "./shaders/fragmentShader.frag":
+/*!*************************************!*\
+  !*** ./shaders/fragmentShader.frag ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"void main(void)\\n{\\n    gl_FragColor = vec4(gl_FragCoord/1900.0);\\n}\");\n\n//# sourceURL=webpack:///./shaders/fragmentShader.frag?");
+
+/***/ }),
+
+/***/ "./shaders/vertexShader.vert":
+/*!***********************************!*\
+  !*** ./shaders/vertexShader.vert ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"varying vec2 vUv;\\n\\nvoid main() {\\n  vUv = uv;\\n  gl_Position = projectionMatrix * modelViewMatrix*vec4( position, 1.0 );\\n}\");\n\n//# sourceURL=webpack:///./shaders/vertexShader.vert?");
 
 /***/ })
 

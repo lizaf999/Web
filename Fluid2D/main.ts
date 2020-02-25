@@ -1,5 +1,7 @@
 window.addEventListener("DOMContentLoaded", init);
 
+import vertexShader from "./shaders/vertexShader.vert"
+import fragmentShader from "./shaders/fragmentShader.frag"
 declare var THREE;
 
 function init() {
@@ -14,6 +16,11 @@ function init() {
     depthBuffer:false,
     stencilBuffer:false
   })
+
+  const mat = new THREE.ShaderMaterial({
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader
+  });
 
   // レンダラーを作成
   const renderer = new THREE.WebGLRenderer({
@@ -53,7 +60,7 @@ function init() {
   const materialPre = new THREE.MeshStandardMaterial({
     color:0xffff00
   });
-  const boxPre = new THREE.Mesh(geometry, materialPre);
+  const boxPre = new THREE.Mesh(geometry, mat);
   const lightPre = new THREE.DirectionalLight(0xffffff);
   lightPre.intensity = 2; // 光の強さを倍に
   lightPre.position.set(1, 1, 1);

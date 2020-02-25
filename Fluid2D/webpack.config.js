@@ -19,7 +19,12 @@ module.exports = {
           test: /\.ts$/,
           // TypeScript をコンパイルする
           use: "ts-loader"
-        }
+        },
+        {
+            test: /\.(vert|frag)$/,
+            exclude: /node_modules/,
+            use: 'raw-loader'
+          }
       ]
     },
     // import 文で .ts ファイルを解決するため
